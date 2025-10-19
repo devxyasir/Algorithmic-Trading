@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Analyzer - 52+ Indicators</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="/eel.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📈 Real-Time Trading Analyzer</h1>
+            <p>52+ Indicator Analysis | Entry/Exit/Stop Detection</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="upload-options">
+                <div class="upload-card">
+                    <h3>📁 Upload CSV File</h3>
+                    <p class="upload-desc">Upload your own CSV with a 'Symbol' column</p>
+                    <input type="file" id="csvFileInput" accept=".csv" />
+                    <label for="csvFileInput" class="file-label">
+                        <span id="fileName">Choose File</span>
+                    </label>
+                </div>
+                
+                <div class="divider">OR</div>
+                
+                <div class="upload-card">
+                    <h3>📋 Use Template File</h3>
+                    <p class="upload-desc">Analyze symbols from <code>symbols/1.csv</code></p>
+                    <button id="useTemplateBtn" class="btn-template">Use Template File</button>
+                </div>
+            </div>
+            
+            <div class="symbols-display" id="symbolsDisplay" style="display: none;">
+                <div class="symbols-header">
+                    <h4>Selected Symbols (<span id="symbolCount">0</span>)</h4>
+                    <button id="clearSymbolsBtn" class="btn-clear">Clear</button>
+                </div>
+                <div class="symbols-list" id="symbolsList"></div>
+            </div>
+            
+            <div class="input-group">
+                <label>⏱️ Timeframe (fetches max available data):</label>
+                <select id="timeframe">
+                    <option value="1d" selected>📊 Daily (1D)</option>
+                    <option value="1h">⏰ 1 Hour</option>
+                    <option value="4h">🕐 4 Hours</option>
+                    <option value="1wk">📅 Weekly</option>
+                    <option value="30m">⏲️ 30 Minutes</option>
+                    <option value="15m">⚡ 15 Minutes</option>
+                    <option value="5m">🚀 5 Minutes</option>
+                    <option value="1m">⚡ 1 Minute</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button id="clearDataBtn" class="btn-warning" title="Clear old data and indicators before new analysis">🗑️ Clear Old Data</button>
+                <button id="analyzeBtn" class="btn-primary" disabled>Analyze Symbols</button>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="progress-section" id="progressSection" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">Analyzing...</p>
+            <div class="status-box" id="statusBox">
+                <div id="statusMessages"></div>
+            </div>
+        </section>
+
+        <!-- Summary Cards -->
+        <section class="summary" id="summary" style="display: none;">
+            <div class="card buy">
+                <h3>BUY Signals</h3>
+                <p class="count" id="buyCount">0</p>
+            </div>
+            <div class="card sell">
+                <h3>SELL Signals</h3>
+                <p class="count" id="sellCount">0</p>
+            </div>
+            <div class="card hold">
+                <h3>HOLD Signals</h3>
+                <p class="count" id="holdCount">0</p>
+            </div>
+            <div class="card total">
+                <h3>Total Analyzed</h3>
+                <p class="count" id="totalCount">0</p>
+            </div>
+        </section>
+
+        <!-- Results Table -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="table-header">
+                <h2>Analysis Results</h2>
+                <button id="exportBtn" class="btn-secondary">Export CSV</button>
+            </div>
+            
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Signal</th>
+                        <th>Confidence</th>
+                        <th>Entry</th>
+                        <th>Stop Loss</th>
+                        <th>Take Profit</th>
+                        <th>R:R</th>
+                        <th>Rationale</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Detail Modal -->
+        <div id="detailModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="detailContent"></div>
+            </div>
+        </div>
+
+        <!-- AI Analysis Modal -->
+        <div id="aiModal" class="modal">
+            <div class="modal-content" style="max-width: 900px;">
+                <span class="close-ai">&times;</span>
+                <div id="aiContent">
+                    <div class="ai-loading" style="text-align: center; padding: 40px;">
+                        <div class="spinner"></div>
+                        <p>🤖 AI is analyzing...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
